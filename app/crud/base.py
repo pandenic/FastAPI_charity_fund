@@ -1,0 +1,73 @@
+# app/crud/base.py
+from typing import TypeVar, Generic, Optional, List, Type
+
+from pydantic import BaseModel
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.db import Base
+from app.models import User
+
+ModelType = TypeVar('ModelType', bound=Base)
+CreateSchemaType = TypeVar('CreateSchemaType', bound=BaseModel)
+
+
+class CRUDBase(Generic[
+    ModelType,
+    CreateSchemaType
+]):
+
+    def __init__(
+            self,
+            model: Type[ModelType]
+    ):
+        self.model = model
+
+    async def get_multi(
+            self,
+            session: AsyncSession
+    ) -> List[ModelType]:
+        db_objs = await session.execute(select(self.model))
+        return db_objs.scalars().all()
+
+    async def create(
+            self,
+            obj_in,
+            session: AsyncSession,
+            user: Optional[User] = None,
+    ) -> ModelType:
+        obj_in_data = obj_in.dict()
+        if user:
+            obj_in_data['user_id'] = user.id
+        db_obj = self.model(**obj_in_data)
+        session.add(db_obj)
+        await session.commit()
+        await session.refresh(db_obj)
+        return db_obj
+
+    async def get_not_fully_invested(
+            self,
+            session: AsyncSession,
+    ) -> List[ModelType]:
+        db_objs = await session.execute(
+            select(self.model).where(
+                self.model.fully_invested == False,
+            )
+        )
+        return db_objs.scalars().all()
+
+    async def update_when_investing(
+            self,
+            db_obj: ModelType,
+            session: AsyncSession,
+    ) -> None:
+        session.add(db_obj)
+
+    async def update_multi_when_investing(
+            self,
+            db_objs: list[ModelType],
+            session: AsyncSession,
+    ) -> None:
+        for db_obj in db_objs:
+            session.add(db_obj)
+
