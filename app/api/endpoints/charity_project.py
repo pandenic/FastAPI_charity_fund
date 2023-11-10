@@ -5,8 +5,8 @@ from app.api.validators import check_charity_project_name_duplication, check_and
     check_charity_project_fully_invested, check_full_amount_gte_invested_amount_on_update
 from app.core.db import get_async_session
 from app.core.user import current_superuser
-from app.crud.charityproject import charity_project_crud
-from app.schemas.charityproject import CharityProjectDB, CharityProjectCreate, CharityProjectUpdate
+from app.crud.charity_project import charity_project_crud
+from app.schemas.charity_project import CharityProjectDB, CharityProjectCreate, CharityProjectUpdate
 from app.services.investing import investing_after_creation_charity_project
 
 router = APIRouter()

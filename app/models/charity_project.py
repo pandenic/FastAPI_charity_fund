@@ -1,4 +1,4 @@
-# app/models/charityproject.py
+# app/models/charity_project.py
 
 from sqlalchemy import Column, String, Text
 

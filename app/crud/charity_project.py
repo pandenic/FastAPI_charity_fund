@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.base import CRUDBase, ModelType
 from app.models import CharityProject
-from app.schemas.charityproject import CharityProjectCreate
+from app.schemas.charity_project import CharityProjectCreate
 
 
 class CRUDCharityProject(CRUDBase[
