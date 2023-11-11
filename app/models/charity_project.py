@@ -1,4 +1,5 @@
 # app/models/charity_project.py
+from typing import TypeVar
 
 from sqlalchemy import Column, String, Text
 

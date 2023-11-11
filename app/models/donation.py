@@ -1,4 +1,5 @@
 # app/models/donation.py
+from typing import TypeVar
 
 from sqlalchemy import Column, Text, Integer, ForeignKey
 

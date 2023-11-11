@@ -10,7 +10,6 @@ from app.models import CharityProject, Donation
 def update_objects_when_investing(
         charity_project: CharityProject,
         donation: Donation,
-        close_date: datetime,
 ) -> tuple[CharityProject, Donation]:
     money_to_invest = donation.full_amount - donation.invested_amount
     required_money = charity_project.full_amount - charity_project.invested_amount
@@ -18,19 +17,19 @@ def update_objects_when_investing(
         donation.invested_amount += required_money
         donation.fully_invested = money_to_invest == required_money
         if donation.fully_invested:
-            donation.close_date = close_date
+            donation.close_date = datetime.datetime.now()
         charity_project.invested_amount = charity_project.full_amount
         charity_project.fully_invested = True
-        charity_project.close_date = close_date
+        charity_project.close_date = datetime.datetime.now()
     else:
         charity_project.invested_amount += money_to_invest
         donation.invested_amount = donation.full_amount
         donation.fully_invested = True
-        donation.close_date = close_date
+        donation.close_date = datetime.datetime.now()
     return charity_project, donation
 
 
-async def investing_after_creation_charity_project(
+async def investing_after_create_charity_project(
         charity_project: CharityProject,
         session: AsyncSession,
 ):
@@ -42,7 +41,7 @@ async def investing_after_creation_charity_project(
         if charity_project.fully_invested:
             break
         charity_project, donation = update_objects_when_investing(
-            charity_project, donation, charity_project.create_date,
+            charity_project, donation,
         )
     await charity_project_crud.update_when_investing(charity_project, session)
     await donation_crud.update_multi_when_investing(donations, session)
@@ -64,7 +63,7 @@ async def investing_after_making_donation(
         if donation.fully_invested:
             break
         charity_project, donation = update_objects_when_investing(
-            charity_project, donation, donation.create_date,
+            charity_project, donation,
         )
     await donation_crud.update_when_investing(donation, session)
     await charity_project_crud.update_multi_when_investing(charity_projects, session)

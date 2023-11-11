@@ -43,22 +43,32 @@ async def check_and_get_charity_project_if_exists(
     return charity_project
 
 
-def check_charity_project_fully_invested(
-        charity_project: CharityProject,
-) -> None:
-    if not charity_project:
-        raise HTTPException(
-            status_code=HTTPStatus.BAD_REQUEST,
-            detail=ErrorMessage.CHARITY_PROJECT_CANNOT_BE_DELETED,
-        )
-
-
 def check_full_amount_gte_invested_amount_on_update(
-        charity_project_data_update: CharityProjectUpdate,
+        updated_data: CharityProjectUpdate,
         charity_project: CharityProject,
 ) -> None:
-    if charity_project_data_update.full_amount < charity_project.invested_amount:
+    if updated_data.full_amount and updated_data.full_amount < charity_project.invested_amount:
         raise HTTPException(
             status_code=HTTPStatus.BAD_REQUEST,
             detail=ErrorMessage.CHARITY_PROJECT_FULL_AMOUNT_LT_INVESTED,
+        )
+
+
+def check_charity_project_fully_invested_on_update(
+    charity_project: CharityProject,
+) -> None:
+    if charity_project.fully_invested:
+        raise HTTPException(
+            status_code=HTTPStatus.BAD_REQUEST,
+            detail=ErrorMessage.CHARITY_PROJECT_FULLY_INVESTED,
+        )
+
+
+def check_charity_project_invested_on_delete(
+    charity_project: CharityProject,
+) -> None:
+    if charity_project.invested_amount:
+        raise HTTPException(
+            status_code=HTTPStatus.BAD_REQUEST,
+            detail=ErrorMessage.CHARITY_PROJECT_PARTLY_INVESTED,
         )
