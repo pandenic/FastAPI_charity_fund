@@ -5,7 +5,6 @@ The project uses
 
 | Technologies | Links |
 | ---- | ---- |
-| ![git_Flask](https://github.com/pandenic/Shortcut_URL/assets/114985447/340e1027-f1e0-4d0b-a5b1-d2286e89fbd0) | [Flask](https://flask.palletsprojects.com/en/3.0.x/) |
 | ![git_SQLAlchemy](https://github.com/pandenic/Shortcut_URL/assets/114985447/3d49ecef-6014-4e87-8a39-8e3f62660a98) | [SQLAlchemy](https://www.sqlalchemy.org/) |
 | ![git_SQLite](https://github.com/pandenic/Shortcut_URL/assets/114985447/9305dc46-66c1-4e5a-a1e4-3167e676780a)| [SQLite](https://www.sqlite.org/index.html) |
 
