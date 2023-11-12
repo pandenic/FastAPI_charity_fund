@@ -1,7 +1,6 @@
 import asyncio
 import os
 from logging.config import fileConfig
-from pprint import pprint
 
 from dotenv import load_dotenv
 from sqlalchemy import engine_from_config
