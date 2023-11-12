@@ -1,3 +1,4 @@
+"""Contains endpoints description for user processing."""
 from http.client import HTTPException
 
 from fastapi import APIRouter
@@ -24,12 +25,8 @@ router.include_router(
 )
 
 
-@router.delete(
-    '/users/{id}',
-    tags=['users'],
-    deprecated=True
-)
-def delete_user(id: str):
+@router.delete('/users/{id}', tags=['users'], deprecated=True)
+def delete_user(id: int):
     """Не используйте удаление, деактивируйте пользователей."""
     raise HTTPException(
         status_code=405,

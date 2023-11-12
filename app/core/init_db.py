@@ -1,4 +1,10 @@
-# app/core/init_db.py
+"""
+Describe action on a DB initialization.
+
+Create async context managers for an async session and a user.
+create_user: create a user in DB using context mangers and given data
+create_first_superuser: create superuser using data given in settings.
+"""
 import contextlib
 
 from fastapi_users.exceptions import UserAlreadyExists
@@ -15,8 +21,11 @@ get_user_manager_context = contextlib.asynccontextmanager(get_user_manager)
 
 
 async def create_user(
-        email: EmailStr, password: str, is_superuser: bool = False
+    email: EmailStr,
+    password: str,
+    is_superuser: bool = False,
 ):
+    """Create a user in DB."""
     try:
         async with get_async_session_context() as session:
             async with get_user_db_context(session) as user_db:
@@ -25,16 +34,16 @@ async def create_user(
                         UserCreate(
                             email=email,
                             password=password,
-                            is_superuser=is_superuser
-                        )
+                            is_superuser=is_superuser,
+                        ),
                     )
     except UserAlreadyExists:
         pass
 
 
 async def create_first_superuser():
-    if (settings.first_superuser_email is not None
-            and settings.first_superuser_password is not None):
+    """Create a superuser with params from settings."""
+    if settings.first_superuser_email and settings.first_superuser_password:
         await create_user(
             email=settings.first_superuser_email,
             password=settings.first_superuser_password,

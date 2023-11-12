@@ -1,11 +1,12 @@
+"""Contain Base abstract model description."""
 from datetime import datetime
+from typing import TypeVar
 
-from sqlalchemy import Column, Integer, CheckConstraint, Boolean, DateTime, func, and_, text
-
-from app.core.db import Base
+from sqlalchemy import Boolean, CheckConstraint, Column, DateTime, Integer
 
 
 class BaseModel:
+    """Contain mandatory models' fields."""
 
     full_amount = Column(
         Integer,
@@ -20,3 +21,6 @@ class BaseModel:
         'full_amount >= invested_amount',
         name='full_amount_ge_invested_amount',
     )
+
+
+TBaseModel = TypeVar('TBaseModel', bound=BaseModel)
