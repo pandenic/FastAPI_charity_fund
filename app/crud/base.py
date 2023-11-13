@@ -86,7 +86,7 @@ class CRUDBase(
         """Return a not fully invested obj."""
         db_objs = await session.execute(
             select(self.model).where(
-                self.model.fully_invested == False,
+                self.model.fully_invested == 0,
             ),
         )
         return db_objs.scalars().all()
