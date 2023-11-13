@@ -22,3 +22,4 @@ class ErrorMessage:
     CHARITY_PROJECT_PARTLY_INVESTED = (
         'В проект были внесены средства, не подлежит удалению!'
     )
+    USER_DELETE_FORBIDDEN = 'Удаление пользователей запрещено!'

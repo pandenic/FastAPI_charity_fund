@@ -3,6 +3,9 @@ from typing import Optional
 
 from pydantic import BaseSettings, EmailStr
 
+TOKEN_LIFETIME = 3600
+PASSWORD_LENGTH = 3
+
 
 class Settings(BaseSettings):
     """
@@ -11,6 +14,7 @@ class Settings(BaseSettings):
     app_title: an app name
     database_url: database parameters for salalchemy
     secret: a secret code
+    token_lifetime: lifetime of a token
     first_superuser_email: a default superuser email
     first_superuser_password: a defauld superuser password
     """
