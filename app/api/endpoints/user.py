@@ -1,8 +1,10 @@
 """Contains endpoints description for user processing."""
+from http import HTTPStatus
 from http.client import HTTPException
 
 from fastapi import APIRouter
 
+from app.core.errors import ErrorMessage
 from app.core.user import auth_backend, fastapi_users
 from app.schemas.user import UserCreate, UserRead, UserUpdate
 
@@ -27,8 +29,8 @@ router.include_router(
 
 @router.delete('/users/{id}', tags=['users'], deprecated=True)
 def delete_user(id: int):
-    """Не используйте удаление, деактивируйте пользователей."""
+    """Don't use delete. Deactivate users."""
     raise HTTPException(
-        status_code=405,
-        detail="Удаление пользователей запрещено!",
+        status_code=HTTPStatus.METHOD_NOT_ALLOWED,
+        detail=ErrorMessage.USER_DELETE_FORBIDDEN,
     )
