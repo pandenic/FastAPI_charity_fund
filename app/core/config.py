@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     database_url: database parameters for salalchemy
     secret: a secret code
     TOKEN_LIFETIME: lifetime of a token
-    PASSWORD_LENGTH: minimum password length
+    PASSWORD_LENGTH: minimal password length
     first_superuser_email: a default superuser email
     first_superuser_password: a defauld superuser password
     """
