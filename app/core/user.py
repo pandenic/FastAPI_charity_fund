@@ -9,7 +9,7 @@ from fastapi_users.authentication import (AuthenticationBackend,
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.config import settings, TOKEN_LIFETIME, PASSWORD_LENGTH
+from app.core.config import settings
 from app.core.db import get_async_session
 from app.models.user import User
 from app.schemas.user import UserCreate
@@ -25,7 +25,7 @@ bearer_transport = BearerTransport(tokenUrl='auth/jwt/login')
 
 def get_jwt_strategy(token_lifetime=None) -> JWTStrategy:
     """Define secret word and lifetime for JWT."""
-    return JWTStrategy(secret=settings.secret, lifetime_seconds=TOKEN_LIFETIME)
+    return JWTStrategy(secret=settings.secret, lifetime_seconds=settings.TOKEN_LIFETIME)
 
 
 auth_backend = AuthenticationBackend(
@@ -48,10 +48,10 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
         user: Union[UserCreate, User],
     ) -> None:
         """Validate password."""
-        if len(password) < PASSWORD_LENGTH:
+        if len(password) < settings.PASSWORD_LENGTH:
             raise InvalidPasswordException(
                 reason=f'Password should be at least '
-                       f'{PASSWORD_LENGTH} characters',
+                       f'{settings.PASSWORD_LENGTH} characters',
             )
         if user.email in password:
             raise InvalidPasswordException(
