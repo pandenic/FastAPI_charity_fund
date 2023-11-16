@@ -25,7 +25,7 @@ bearer_transport = BearerTransport(tokenUrl='auth/jwt/login')
 
 def get_jwt_strategy(token_lifetime=None) -> JWTStrategy:
     """Define secret word and lifetime for JWT."""
-    return JWTStrategy(secret=settings.secret, lifetime_seconds=settings.TOKEN_LIFETIME)
+    return JWTStrategy(secret=settings.secret, lifetime_seconds=settings.token_lifetime)
 
 
 auth_backend = AuthenticationBackend(
@@ -48,10 +48,10 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
         user: Union[UserCreate, User],
     ) -> None:
         """Validate password."""
-        if len(password) < settings.PASSWORD_LENGTH:
+        if len(password) < settings.password_length:
             raise InvalidPasswordException(
                 reason=f'Password should be at least '
-                       f'{settings.PASSWORD_LENGTH} characters',
+                       f'{settings.password_length} characters',
             )
         if user.email in password:
             raise InvalidPasswordException(
