@@ -1,10 +1,11 @@
 # Description
-Project is used for charity projects foundation. It supports creation of charity projects and investing donations buy other users. 
+The project is used for charity projects foundation. It supports the creation of charity projects and investing donations by other users. 
 
 The project uses 
 
 | Technologies | Links |
 | ---- | ---- |
+| ![git_FastAPI](https://github.com/pandenic/FastAPI_charity_fund/assets/114985447/369a53da-cfd7-47db-8a6e-7d8b2acfd21d) | [FastAPI](https://fastapi.tiangolo.com/) |
 | ![git_SQLAlchemy](https://github.com/pandenic/Shortcut_URL/assets/114985447/3d49ecef-6014-4e87-8a39-8e3f62660a98) | [SQLAlchemy](https://www.sqlalchemy.org/) |
 | ![git_SQLite](https://github.com/pandenic/Shortcut_URL/assets/114985447/9305dc46-66c1-4e5a-a1e4-3167e676780a)| [SQLite](https://www.sqlite.org/index.html) |
 
@@ -21,6 +22,7 @@ Go to the project directory:
 cd cat_chsrity_fund
 ```
 Create and activate venv:
+
 
 ```bash
 python3.9 -m venv venv
